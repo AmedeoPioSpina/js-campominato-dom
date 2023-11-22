@@ -16,7 +16,7 @@ const gridGameGenFunc = () => {
 const suqareSetAndAssembleFunc = (gridGameTarget) => {
     for(let i = 1; i <= 100; i++){
         let squareElement = squareGenFunc();
-        let pNumElement = pNumElementGenFunc(i);
+        let pNumElement = pNumElementGenFunc();
         squareElement.addEventListener("click", () => {
             squareElement.classList.toggle("bg-light-blue")
             console.log(pNumElement.textContent);
@@ -32,11 +32,34 @@ const squareGenFunc = () => {
     return newSquareElement;
 }
 
-const pNumElementGenFunc = (num) => {
+const pNumElementGenFunc = () => {
     let pElement = document.createElement("p")
+    let num = numAssignmentFunc();
     pElement.classList.add("square-num");
     pElement.textContent = num;
     return pElement
+}
+
+const numAssignmentFunc = () => {
+    debugger;
+    let squareNumList = document.querySelectorAll(".square-num");
+    let squareNumValueList = Array.from(squareNumList, (x) => x.textContent);
+    let randomNum = randomNumGenFunc();
+    let status = false;
+
+    while(!status){
+        if(squareNumValueList.includes(randomNum) === false || squareNumList.length === 0){
+            status = true;
+        }
+        else{
+            randomNum = randomNumGenFunc();
+        }
+    }
+    return randomNum
+}
+
+const randomNumGenFunc = () => {
+    return Math.floor(Math.random() * 100 + 1); 
 }
 
 const injectElementFunc = (parentTarget, elementTarget) => {
